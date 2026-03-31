@@ -85,9 +85,11 @@ class CoveragePlot():
         # dr.line([(x1, 0), (x1+3, 0)], fill=getrgb(self.axis_color), width=1)
         # dr.line([(x1, int(h/2)), (x1+3, int(h/2))], fill=getrgb(self.axis_color), width=1)
         txt = "[0-" + str(max_cov) + "]"
-        fontsize = self.font.getsize(txt)
-        x1 = w - fontsize[0] - 5
-        dr.text( (x1, 0), txt, font=self.font, fill=getrgb(self.axis_color))
+        bbox = dr.textbbox((0, 0), txt, font=self.font)  # returns (x0, y0, x1, y1)
+        text_width = bbox[2] - bbox[0]
+        text_height = bbox[3] - bbox[1]
+        x1 = w - text_width - 5
+        dr.text((x1, 0), txt, font=self.font, fill=getrgb(self.axis_color))
         # dr.text( (x1+3, int(h/2-fontsize[1]/2)), str(int(max_cov/2)), font=self.font, fill=getrgb(self.axis_color))
 
         x1 = 0

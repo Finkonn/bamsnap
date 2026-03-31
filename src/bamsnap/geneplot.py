@@ -125,7 +125,13 @@ class GenePlot():
         x2 = self.w
 
         yi = 0
-        fontsize = self.font.getsize('C')
+        # Create a temporary draw object to measure text size
+        temp_im = Image.new('RGBA', (1, 1))
+        temp_dr = ImageDraw.Draw(temp_im)
+        bbox = temp_dr.textbbox((0, 0), 'C', font=self.font)
+        text_width = bbox[2] - bbox[0]
+        text_height = bbox[3] - bbox[1]
+        fontsize = (text_width, text_height)
         for ga in self.gene_annot:
             # x1 = int((ga.spos - self.spos) * self.scale_x)
             # x2 = int((ga.epos - self.spos) * self.scale_x)
@@ -187,7 +193,13 @@ class GenePlot():
         if self.im is None:
             # if self.font is None:
             #     self.set_font()
-            fontsize = self.font.getsize('C')
+            # Create a temporary draw object to measure text size
+            temp_im = Image.new('RGBA', (1, 1))
+            temp_dr = ImageDraw.Draw(temp_im)
+            bbox = temp_dr.textbbox((0, 0), 'C', font=self.font)
+            text_width = bbox[2] - bbox[0]
+            text_height = bbox[3] - bbox[1]
+            fontsize = (text_width, text_height)
             self.h = self.noline * (self.margin + fontsize[1] + self.lineheight)
 
             self.im = Image.new('RGBA', (self.w, self.h), getrgb(self.bgcolor))

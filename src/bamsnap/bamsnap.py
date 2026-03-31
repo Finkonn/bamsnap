@@ -318,8 +318,10 @@ class BamSnapPlot():
     def get_title_image(self, title, w, fontsize):
         margin = 10
         font = self.get_font(fontsize, 'bold')
-        fontsize = font.getsize(title)
-        h = fontsize[1] + 3 + margin * 2
+        bbox = font.getbbox(title)  # (x0, y0, x1, y1)
+        text_width = bbox[2] - bbox[0]
+        text_height = bbox[3] - bbox[1]
+        h = text_height + 3 + margin * 2
         im = Image.new('RGB', (w, h), getrgb(self.opt['bgcolor']))
         dr = ImageDraw.Draw(im)
 

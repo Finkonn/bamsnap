@@ -67,8 +67,11 @@ class BaseTrack():
 
 
     def set_height(self):
-        self.fontsize = self.font.getsize('C')
-        self.h = self.fontsize[1] + 2
+        bbox = self.font.getbbox('C')  # returns (left, top, right, bottom)
+        width = bbox[2] - bbox[0]
+        height = bbox[3] - bbox[1]
+        self.fontsize = (width, height)
+        self.h = height + 2
 
 
     def get_image(self, margin_top=0, margin_bottom=0):
